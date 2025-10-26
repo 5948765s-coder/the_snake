@@ -145,10 +145,8 @@ def main():
     while running:
         clock.tick(SPEED)
         running = handle_keys(snake)
-        
         if not running:
             break
-            
         snake.update_direction()
         snake.move()
 
