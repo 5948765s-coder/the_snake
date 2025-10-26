@@ -122,7 +122,7 @@ def handle_keys(snake):
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             pygame.quit()
-            raise SystemExit
+            return False
         elif event.type == pygame.KEYDOWN:
             if event.key == pygame.K_UP and snake.direction != DOWN:
                 snake.next_direction = UP
@@ -132,6 +132,7 @@ def handle_keys(snake):
                 snake.next_direction = LEFT
             elif event.key == pygame.K_RIGHT and snake.direction != LEFT:
                 snake.next_direction = RIGHT
+    return True
 
 
 def main():
@@ -140,9 +141,14 @@ def main():
     snake = Snake()
     apple = Apple()
 
-    while True:
+    running = True
+    while running:
         clock.tick(SPEED)
-        handle_keys(snake)
+        running = handle_keys(snake)
+        
+        if not running:
+            break
+            
         snake.update_direction()
         snake.move()
 
@@ -159,6 +165,8 @@ def main():
         snake.draw()
         apple.draw()
         pygame.display.update()
+
+    pygame.quit()
 
 
 if __name__ == '__main__':
